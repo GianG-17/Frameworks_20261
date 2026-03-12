@@ -52,3 +52,22 @@ function formatarRelatorio({ total, totalComImposto, quantidade }) {
     </section>
   `.trim();
 }
+// Classifica vendedores por performance - Versão Moderna
+const classificarVendedores = (vendedores) => {
+  return Object.entries(vendedores)
+    // 1. Converte o objeto em uma lista de objetos padronizada
+    .map(([nome, dados]) => ({
+      nome,
+      ...dados
+    }))
+    // 2. Filtra apenas os ativos e loga os inativos
+    .filter(vendedor => {
+      if (!vendedor.ativo) {
+        console.log(`Vendedor inativo: ${vendedor.nome}`);
+        return false;
+      }
+      return true;
+    })
+    // 3. Ordena do maior para o menor total
+    .sort((a, b) => b.total - a.total);
+};
