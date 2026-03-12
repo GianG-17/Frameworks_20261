@@ -71,3 +71,28 @@ const classificarVendedores = (vendedores) => {
     // 3. Ordena do maior para o menor total
     .sort((a, b) => b.total - a.total);
 };
+
+// Verifica alertas de meta - Versão Moderna
+const verificarAlertas = (metricas, meta) => {
+  const percentual = (metricas.total / meta) * 100;
+  const metaFormatada = percentual.toFixed(1);
+  
+  // Criamos os alertas sem alterar o objeto 'metricas' original
+  const alertaPrincipal = percentual < LIMITE_ALERTA
+    ? { 
+        tipo: 'perigo', 
+        msg: `Meta em ${metaFormatada}% — abaixo do limite de ${LIMITE_ALERTA}%` 
+      }
+    : { 
+        tipo: 'ok', 
+        msg: `Meta atingida: ${metaFormatada}%` 
+      };
+
+  return [
+    alertaPrincipal,
+    { 
+      tipo: 'info', 
+      msg: `Atualizado em: ${new Date().toLocaleString('pt-BR')}` 
+    }
+  ];
+};
