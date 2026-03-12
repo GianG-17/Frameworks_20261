@@ -34,3 +34,21 @@ async function carregarDashboard(periodo) {
     throw erro; // Lança o erro para quem chamou a função tratar
   }
 }
+
+function formatarRelatorio({ total, totalComImposto, quantidade }) {
+  // Criamos um formatador de moeda para o padrão brasileiro (R$)
+  const formatarMoeda = (valor) => 
+    new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
+
+  // Usamos Template Literals para ver o HTML como ele realmente é
+  return `
+    <section class="relatorio-vendas">
+      <h2>Relatório de Vendas</h2>
+      <ul>
+        <li><strong>Total:</strong> ${formatarMoeda(total)}</li>
+        <li><strong>Com impostos:</strong> ${formatarMoeda(totalComImposto)}</li>
+        <li><strong>Quantidade:</strong> ${quantidade} itens</li>
+      </ul>
+    </section>
+  `.trim();
+}
